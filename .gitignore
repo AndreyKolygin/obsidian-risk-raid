@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+main.js
+dist/
+
+# Source maps
+*.map
+
+# Internal docs (local only)
+SPEC.md
+CLAUDE.md
+
+# AI session memory (local only)
+.claude/
+
+# macOS
+.DS_Store
+
+# Editor
+.idea/
+.vscode/
+*.swp

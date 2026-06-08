@@ -1,0 +1,10 @@
+{
+  "id": "obsidian-risk-raid",
+  "name": "Risk RAID",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "RAID log management with interactive risk matrix for project managers",
+  "author": "Andrey Kolygin",
+  "authorUrl": "",
+  "isDesktopOnly": false
+}

@@ -1,0 +1,1559 @@
+/* ============================================================
+   Obsidian Risk RAID — styles.css
+   All class names use .raid- prefix (BEM-style)
+   Uses Obsidian CSS variables for light/dark support
+   ============================================================ */
+
+/* ===========================
+   View container
+   =========================== */
+
+.raid-view-container {
+  padding: 16px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   View switcher (Board ↔ Matrix)
+   =========================== */
+
+.raid-view-switcher {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.raid-view-switch-btn {
+  padding: 5px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: background 0.12s, color 0.12s;
+}
+
+.raid-view-switch-btn:hover:not(:disabled) {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.raid-view-switch-btn--active,
+.raid-view-switch-btn:disabled {
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-weight: 600;
+  border-color: var(--interactive-accent);
+  cursor: default;
+}
+
+/* ===========================
+   Project bar
+   =========================== */
+
+.raid-project-bar {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.raid-project-tab {
+  padding: 4px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.88em;
+  font-weight: 500;
+  transition: background 0.12s, color 0.12s;
+}
+
+.raid-project-tab:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.raid-project-tab--active {
+  background: var(--interactive-accent);
+  color: var(--text-on-accent);
+  border-color: var(--interactive-accent);
+}
+
+.raid-project-tab--new {
+  border-style: dashed;
+  color: var(--text-faint);
+}
+
+.raid-project-tab--new:hover {
+  color: var(--interactive-accent);
+  border-color: var(--interactive-accent);
+  background: transparent;
+}
+
+.raid-empty-state--full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px 16px;
+}
+
+/* ===========================
+   Summary strip
+   =========================== */
+
+/* ── RAID type colour tokens ─────────────────────────────────────────────── */
+:root {
+  --raid-risk:       #E05A3A;
+  --raid-assumption: #27AE60;
+  --raid-issue:      #3A9BD5;
+  --raid-dependency: #8B5CF6;
+}
+
+/* ── Summary strip ─────────────────────────────────────────────────────────── */
+.raid-summary-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.raid-summary-card {
+  background: var(--background-secondary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  border-left: 3px solid transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s, box-shadow 0.12s;
+}
+
+.raid-summary-card:hover {
+  background: var(--background-modifier-hover);
+}
+
+.raid-summary-card--active {
+  box-shadow: 0 0 0 2px var(--interactive-accent);
+}
+
+.raid-summary-card--risk       { border-left-color: var(--raid-risk);       }
+.raid-summary-card--assumption { border-left-color: var(--raid-assumption);  }
+.raid-summary-card--issue      { border-left-color: var(--raid-issue);       }
+.raid-summary-card--dependency { border-left-color: var(--raid-dependency);  }
+
+.raid-summary-card--active.raid-summary-card--risk {
+  background: color-mix(in srgb, var(--raid-risk) 18%, var(--background-secondary));
+}
+.raid-summary-card--active.raid-summary-card--assumption {
+  background: color-mix(in srgb, var(--raid-assumption) 18%, var(--background-secondary));
+}
+.raid-summary-card--active.raid-summary-card--issue {
+  background: color-mix(in srgb, var(--raid-issue) 18%, var(--background-secondary));
+}
+.raid-summary-card--active.raid-summary-card--dependency {
+  background: color-mix(in srgb, var(--raid-dependency) 18%, var(--background-secondary));
+}
+
+.raid-summary-card__letter {
+  font-size: 1.3em;
+  font-weight: 800;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.raid-summary-card--risk       .raid-summary-card__letter { color: var(--raid-risk);       }
+.raid-summary-card--assumption .raid-summary-card__letter { color: var(--raid-assumption);  }
+.raid-summary-card--issue      .raid-summary-card__letter { color: var(--raid-issue);       }
+.raid-summary-card--dependency .raid-summary-card__letter { color: var(--raid-dependency);  }
+
+.raid-summary-card__count {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: var(--text-normal);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  min-width: 1.5ch;
+  flex-shrink: 0;
+}
+
+.raid-summary-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.raid-summary-card__label {
+  font-size: 0.82em;
+  font-weight: 600;
+  color: var(--text-normal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.raid-summary-card__subtitle {
+  font-size: 0.72em;
+  color: var(--text-muted);
+}
+
+/* ===========================
+   Filter bar
+   =========================== */
+
+.raid-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+}
+
+.raid-filter-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.raid-filter-select,
+.raid-filter-input {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 0.88em;
+  outline: none;
+}
+
+.raid-filter-select:focus,
+.raid-filter-input:focus {
+  border-color: var(--interactive-accent);
+}
+
+.raid-filter-input {
+  min-width: 150px;
+}
+
+/* ===========================
+   Date groups
+   =========================== */
+
+.raid-date-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 28px;
+}
+
+/* Each card occupies one row: stamp | card */
+.raid-card-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 0 14px;
+}
+
+.raid-date-stamp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 12px;
+  user-select: none;
+  min-height: 20px;
+}
+
+.raid-date-weekday {
+  font-size: 1.05em;
+  font-weight: 700;
+  color: var(--text-normal);
+  line-height: 1.1;
+}
+
+.raid-date-label {
+  font-size: 0.75em;
+  color: var(--text-muted);
+  margin-top: 1px;
+  text-align: right;
+}
+
+.raid-date-time {
+  font-size: 0.78em;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.raid-empty-state {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 40px 16px;
+  font-size: 0.9em;
+}
+
+/* ===========================
+   Card
+   =========================== */
+
+.raid-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-left: 3px solid transparent;
+  border-radius: 8px;
+  padding: 11px 12px 28px 12px; /* bottom padding reserves space for del btn */
+  cursor: pointer;
+  transition: box-shadow 0.12s;
+  position: relative;
+}
+
+.raid-card:hover {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.09);
+}
+
+/* Left border by severity / status */
+.raid-card--blocker    { border-left-color: #c0392b; }
+.raid-card--critical   { border-left-color: #e05a5a; }
+.raid-card--high       { border-left-color: #e0913a; }
+.raid-card--medium     { border-left-color: #4a90d9; }
+.raid-card--in-progress{ border-left-color: #4caf50; }
+.raid-card--done       { border-left-color: var(--background-modifier-border); }
+.raid-card--low        { border-left-color: #7ec67e; }
+
+/* Left border by RAID type (used when severity colors are OFF) */
+.raid-card--type-risk        { border-left-color: var(--raid-risk); }
+.raid-card--type-assumption  { border-left-color: var(--raid-assumption); }
+.raid-card--type-issue       { border-left-color: var(--raid-issue); }
+.raid-card--type-dependency  { border-left-color: var(--raid-dependency); }
+
+/* Done state: dim title */
+.raid-card--done .raid-card__title {
+  text-decoration: line-through;
+  color: var(--text-faint);
+}
+
+/* ── Body row: checkbox + content ──────────── */
+
+.raid-card__body {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* ── Checkbox ───────────────────────────────── */
+
+.raid-card__check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--background-modifier-border);
+  background: transparent;
+  cursor: pointer;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.12s, background 0.12s;
+  user-select: none;
+}
+
+.raid-card__check:hover {
+  border-color: var(--interactive-accent);
+}
+
+.raid-card__check--done {
+  background: var(--interactive-accent);
+  border-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.raid-card__check--done::after {
+  content: '✓';
+}
+
+/* ── Content ────────────────────────────────── */
+
+.raid-card__content {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.raid-card__title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.raid-card__id-badge {
+  flex-shrink: 0;
+  font-size: 0.72em;
+  font-weight: 700;
+  font-family: var(--font-monospace);
+  color: var(--text-faint);
+  background: var(--background-secondary);
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.raid-card__title {
+  flex: 1;
+  font-size: 0.93em;
+  font-weight: 600;
+  color: var(--text-normal);
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+/* Description — inline text below title */
+.raid-card__desc {
+  margin: 4px 0 0;
+  font-size: 0.84em;
+  color: var(--text-muted);
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+/* ── History button (top-right, in title row) ── */
+
+.raid-card__history-btn {
+  flex-shrink: 0;
+  opacity: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.82em;
+  line-height: 1;
+  transition: opacity 0.1s, color 0.1s, background 0.1s;
+}
+
+.raid-card:hover .raid-card__history-btn {
+  opacity: 1;
+}
+
+.raid-card__history-btn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--interactive-accent);
+}
+
+/* ── Edit button (top-right, in title row) ── */
+
+.raid-card__edit-btn {
+  flex-shrink: 0;
+  opacity: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  line-height: 1;
+  transition: opacity 0.1s, color 0.1s, background 0.1s;
+}
+
+.raid-card:hover .raid-card__edit-btn {
+  opacity: 1;
+}
+
+.raid-card__edit-btn:hover {
+  background: var(--background-modifier-hover);
+  color: var(--interactive-accent);
+}
+
+/* ── Delete button (bottom-right, absolute) ── */
+
+.raid-card__del-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  opacity: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.82em;
+  line-height: 1;
+  transition: opacity 0.1s, color 0.1s, background 0.1s;
+}
+
+.raid-card:hover .raid-card__del-btn {
+  opacity: 1;
+}
+
+.raid-card__del-btn:hover {
+  background: rgba(192, 57, 43, 0.1);
+  color: #c0392b;
+}
+
+/* ── Expand hint ─────────────────────────────── */
+
+.raid-card__expand-hint {
+  font-size: 0.72em;
+  color: var(--text-faint);
+  text-align: right;
+  margin-top: 4px;
+  opacity: 0;
+  transition: opacity 0.1s;
+  user-select: none;
+  line-height: 1;
+}
+
+.raid-card:hover .raid-card__expand-hint,
+.raid-card--expanded .raid-card__expand-hint {
+  opacity: 1;
+}
+
+/* ── Detail panel ───────────────────────────── */
+
+.raid-card__detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.raid-card__detail--open {
+  max-height: 1000px;
+}
+
+.raid-card__detail-row {
+  display: flex;
+  gap: 6px;
+  padding: 5px 0;
+  font-size: 0.82em;
+  line-height: 1.45;
+  border-top: 1px solid var(--background-modifier-border);
+  align-items: baseline;
+}
+
+.raid-card__detail-row:first-child {
+  margin-top: 10px;
+}
+
+/* Reuse existing field label / value classes */
+.raid-card__field-label {
+  flex-shrink: 0;
+  font-size: 0.82em;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding-top: 1px;
+  min-width: 90px;
+}
+
+.raid-card__field-value {
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Tags ────────────────────────────────────── */
+
+.raid-card__tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.raid-card__tag {
+  font-size: 0.75em;
+  color: var(--interactive-accent);
+  background: rgba(var(--interactive-accent-rgb, 63, 118, 189), 0.08);
+  padding: 1px 7px;
+  border-radius: 20px;
+}
+
+/* ── Badges ──────────────────────────────────── */
+
+.raid-card__badges {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  align-items: center;
+}
+
+/* ===========================
+   Badges
+   =========================== */
+
+.raid-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.74em;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Type badges — match summary card colours */
+.raid-badge--type { font-weight: 700; }
+.raid-badge--type-risk       { background: rgba(224, 90, 58,  0.12); color: var(--raid-risk);       }
+.raid-badge--type-assumption { background: rgba( 39,174, 96,  0.12); color: var(--raid-assumption);  }
+.raid-badge--type-issue      { background: rgba( 58,155,213,  0.12); color: var(--raid-issue);       }
+.raid-badge--type-dependency { background: rgba(139, 92,246,  0.12); color: var(--raid-dependency);  }
+
+/* Severity */
+.raid-badge--critical { background: rgba(192, 57, 43,  0.12); color: #c0392b; }
+.raid-badge--high     { background: rgba(224,145, 58,  0.14); color: #b8711a; }
+.raid-badge--medium   { background: rgba( 74,144,217,  0.14); color: #2a72bb; }
+.raid-badge--low      { background: rgba( 76,175, 80,  0.14); color: #2e7d32; }
+
+/* Status fallback badges */
+.raid-badge--status-open        { background: rgba( 74,144,217, 0.12); color: #2a72bb; }
+.raid-badge--status-watch       { background: rgba(224,145, 58, 0.12); color: #b8711a; }
+.raid-badge--status-mitigated   { background: rgba( 76,175, 80, 0.12); color: #2e7d32; }
+.raid-badge--status-closed      { background: var(--background-secondary); color: var(--text-faint); }
+.raid-badge--status-blocker     { background: rgba(192, 57, 43, 0.14); color: #c0392b; }
+.raid-badge--status-in-progress { background: rgba( 76,175, 80, 0.14); color: #2e7d32; }
+.raid-badge--status-resolved    { background: rgba( 76,175, 80, 0.12); color: #2e7d32; }
+.raid-badge--status-confirmed   { background: rgba( 76,175, 80, 0.12); color: #2e7d32; }
+.raid-badge--status-unconfirmed { background: rgba(224,145, 58, 0.12); color: #b8711a; }
+.raid-badge--status-pending     { background: rgba( 74,144,217, 0.12); color: #2a72bb; }
+.raid-badge--status-blocked     { background: rgba(192, 57, 43, 0.14); color: #c0392b; }
+
+/* IDs chip — neutral gray */
+.raid-badge--ids {
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  letter-spacing: 0.02em;
+}
+
+/* Owner initials — neutral circle */
+.raid-badge--owner {
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ===========================
+   Risk Matrix
+   =========================== */
+
+.raid-matrix-container {
+  padding: 4px 8px;
+}
+
+.raid-matrix-title {
+  margin-bottom: 16px;
+  color: var(--text-normal);
+  font-size: 1.3em;
+}
+
+.raid-matrix-grid-wrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.raid-matrix-y-axis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: var(--text-muted);
+  font-size: 0.78em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  min-width: 18px;
+  padding: 2px;
+}
+
+.raid-matrix-grid-area {
+  display: grid;
+  grid-template-areas:
+    "ylabels grid"
+    "empty   xlabels"
+    "empty2  xaxis";
+  grid-template-columns: 56px 1fr;
+  grid-template-rows: 1fr 28px 20px;
+  gap: 4px;
+  flex: 1;
+}
+
+.raid-matrix-y-labels {
+  grid-area: ylabels;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.raid-matrix-y-label {
+  text-align: right;
+  padding-right: 8px;
+  font-size: 0.78em;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.raid-matrix-grid {
+  grid-area: grid;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  min-height: 270px;
+}
+
+.raid-matrix-cell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-content: flex-start;
+  padding: 6px;
+  border-radius: 6px;
+  min-height: 86px;
+}
+
+.raid-matrix-cell--critical {
+  background: rgba(163, 45, 45, 0.15);
+  border: 1px solid rgba(163, 45, 45, 0.4);
+}
+.raid-matrix-cell--high {
+  background: rgba(99, 56, 6, 0.15);
+  border: 1px solid rgba(186, 117, 23, 0.4);
+}
+.raid-matrix-cell--medium {
+  background: rgba(12, 68, 124, 0.10);
+  border: 1px solid rgba(55, 138, 221, 0.3);
+}
+.raid-matrix-cell--low {
+  background: rgba(39, 80, 10, 0.10);
+  border: 1px solid rgba(99, 153, 34, 0.3);
+}
+
+.raid-matrix-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--background-primary);
+  border: 2px solid var(--background-modifier-border);
+  color: var(--text-normal);
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.raid-matrix-bubble:hover {
+  transform: scale(1.18);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  position: relative;
+}
+
+.raid-matrix-bubble--overflow {
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  border-style: dashed;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.raid-matrix-bubble--overflow:hover {
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+  transform: scale(1.1);
+  box-shadow: none;
+}
+
+.raid-matrix-bubble--collapsed {
+  display: none;
+}
+
+.raid-matrix-bubble--active {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--interactive-accent);
+  transform: scale(1.12);
+  z-index: 10;
+  position: relative;
+}
+
+.raid-matrix-x-labels {
+  grid-area: xlabels;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: flex-start;
+}
+
+.raid-matrix-x-label {
+  text-align: center;
+  font-size: 0.78em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.raid-matrix-x-axis-label {
+  grid-area: xaxis;
+  text-align: center;
+  font-size: 0.75em;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.raid-matrix-unplotted {
+  margin-top: 14px;
+  padding: 8px 12px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  font-size: 0.83em;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.raid-matrix-unplotted-chip {
+  padding: 2px 8px;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.88em;
+  transition: color 0.1s, border-color 0.1s;
+}
+
+.raid-matrix-unplotted-chip:hover {
+  color: var(--interactive-accent);
+  border-color: var(--interactive-accent);
+}
+
+.raid-matrix-legend {
+  display: flex;
+  gap: 14px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.raid-matrix-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.83em;
+  color: var(--text-muted);
+}
+
+.raid-matrix-legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.raid-matrix-legend-color--critical {
+  background: rgba(163, 45, 45, 0.4);
+  border: 1px solid rgba(163, 45, 45, 0.6);
+}
+.raid-matrix-legend-color--high {
+  background: rgba(99, 56, 6, 0.4);
+  border: 1px solid rgba(186, 117, 23, 0.6);
+}
+.raid-matrix-legend-color--medium {
+  background: rgba(12, 68, 124, 0.3);
+  border: 1px solid rgba(55, 138, 221, 0.5);
+}
+.raid-matrix-legend-color--low {
+  background: rgba(39, 80, 10, 0.3);
+  border: 1px solid rgba(99, 153, 34, 0.5);
+}
+
+.raid-matrix-selected {
+  margin-top: 20px;
+}
+
+.raid-matrix-selected:empty {
+  display: none;
+}
+
+/* ===========================
+   Modal form — redesigned
+   =========================== */
+
+.modal.raid-form-modal {
+  width: 640px;
+  max-width: 96vw;
+}
+
+/* Hide Obsidian's default empty title bar */
+.raid-form-modal .modal-title {
+  display: none;
+}
+
+/* Remove default padding from modal-content so our header touches the edges */
+.raid-form-modal .modal-content {
+  padding: 0;
+  overflow-y: auto;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+
+.raid-form-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px 14px;
+  border-top: 3px solid transparent;
+  border-bottom: 1px solid var(--background-modifier-border);
+  flex-shrink: 0;
+}
+
+.raid-form-header--risk       { border-top-color: var(--raid-risk); }
+.raid-form-header--assumption { border-top-color: var(--raid-assumption); }
+.raid-form-header--issue      { border-top-color: var(--raid-issue); }
+.raid-form-header--dependency { border-top-color: var(--raid-dependency); }
+
+.raid-form-header__letter {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3em;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.raid-form-header__letter--risk       { color: var(--raid-risk);       background: rgba(224, 90, 58,  0.12); }
+.raid-form-header__letter--assumption { color: var(--raid-assumption);  background: rgba( 39,174, 96,  0.12); }
+.raid-form-header__letter--issue      { color: var(--raid-issue);       background: rgba( 58,155,213,  0.12); }
+.raid-form-header__letter--dependency { color: var(--raid-dependency);  background: rgba(139, 92,246,  0.12); }
+
+.raid-form-header__title {
+  flex: 1;
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--text-normal);
+  margin: 0;
+  padding: 0;
+  border: none;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.raid-form-type-select {
+  flex-shrink: 0;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  font-size: 0.88em;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+
+.raid-form-type-select:focus {
+  border-color: var(--interactive-accent);
+}
+
+/* ── Body ────────────────────────────────────────────────────────────────── */
+
+.raid-form-body {
+  padding: 18px 20px 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Section divider ─────────────────────────────────────────────────────── */
+
+.raid-form-section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  padding-bottom: 7px;
+  margin: 10px 0 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+/* Severity preview inside the divider row */
+.raid-form-section-divider .raid-severity-preview {
+  padding: 0;
+  margin: 0;
+  min-height: unset;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+}
+
+/* ── Form field ──────────────────────────────────────────────────────────── */
+
+.raid-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.raid-form-field__label {
+  font-size: 0.75em;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+.raid-form-field__required {
+  color: var(--color-red, #e05a5a);
+}
+
+.raid-form-field__hint {
+  font-size: 0.75em;
+  color: var(--text-faint);
+  margin-top: -2px;
+  margin-bottom: 2px;
+}
+
+/* ── Inputs ──────────────────────────────────────────────────────────────── */
+
+.raid-form-input,
+.raid-form-select,
+.raid-form-textarea {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 0.92em;
+  font-family: var(--font-interface);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+
+.raid-form-input:focus,
+.raid-form-select:focus,
+.raid-form-textarea:focus {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px rgba(var(--interactive-accent-rgb, 63, 118, 189), 0.12);
+}
+
+.raid-form-textarea {
+  resize: vertical;
+  min-height: 68px;
+  line-height: 1.55;
+}
+
+.raid-form-textarea--note {
+  min-height: 52px;
+  margin-top: 6px;
+}
+
+.raid-form-textarea--short {
+  min-height: 52px;
+}
+
+/* ── 2-column grid ───────────────────────────────────────────────────────── */
+
+.raid-form-grid--2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* ── Severity preview ────────────────────────────────────────────────────── */
+
+.raid-severity-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0 12px;
+  min-height: 24px;
+}
+
+.raid-severity-preview__label {
+  font-size: 0.82em;
+  color: var(--text-faint);
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+
+.raid-form-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--background-modifier-border);
+  margin-top: 6px;
+}
+
+.raid-form-btn {
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  transition: background 0.12s;
+}
+
+.raid-form-btn:hover {
+  background: var(--background-modifier-hover);
+}
+
+.raid-form-btn--primary {
+  background: var(--interactive-accent);
+  border-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.raid-form-btn--primary:hover {
+  background: var(--interactive-accent-hover, var(--interactive-accent));
+}
+
+/* owner input inside form field inherits form width */
+.raid-form-field .raid-owner-input {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 0.92em;
+  font-family: var(--font-interface);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+
+.raid-form-field .raid-owner-input:focus {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px rgba(var(--interactive-accent-rgb, 63, 118, 189), 0.12);
+}
+
+@media (max-width: 500px) {
+  .raid-form-grid--2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================
+   History modal
+   =========================== */
+
+.modal.raid-history-modal {
+  width: 560px;
+  max-width: 96vw;
+}
+
+.raid-history-modal .modal-content {
+  padding: 0;
+}
+
+.raid-history-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.raid-history-title {
+  flex: 1;
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--text-normal);
+  margin: 0;
+  padding: 0;
+  border: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.raid-history-timeline {
+  padding: 14px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.raid-history-entry {
+  position: relative;
+  padding: 12px 0 12px 20px;
+  border-left: 2px solid var(--background-modifier-border);
+}
+
+.raid-history-entry:last-child {
+  border-left-color: transparent;
+}
+
+/* dot on the timeline */
+.raid-history-entry::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--interactive-accent);
+  border: 2px solid var(--background-primary);
+}
+
+.raid-history-entry:last-child::before {
+  background: var(--text-faint);
+}
+
+.raid-history-entry__date {
+  font-size: 0.8em;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.raid-history-entry__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.raid-history-entry__change {
+  font-size: 0.88em;
+  color: var(--text-normal);
+  line-height: 1.4;
+  padding-left: 12px;
+  position: relative;
+}
+
+.raid-history-entry__change::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--text-faint);
+}
+
+/* ===========================
+   Owner combobox
+   =========================== */
+
+.raid-owner-input {
+  width: 100%;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 0.9em;
+  outline: none;
+}
+
+.raid-owner-input:focus {
+  border-color: var(--interactive-accent);
+}
+
+.raid-owner-dropdown {
+  position: fixed;
+  z-index: var(--layer-menu, 9999);
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.raid-owner-dropdown__item {
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: var(--text-normal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.raid-owner-dropdown__item:hover {
+  background: var(--background-modifier-hover);
+}
+
+.raid-owner-dropdown__item--add {
+  color: var(--interactive-accent);
+  border-top: 1px solid var(--background-modifier-border);
+  margin-top: 4px;
+  padding-top: 8px;
+}
+
+.raid-owner-add-label {
+  font-weight: 600;
+}
+
+.raid-owner-match {
+  background: rgba(var(--interactive-accent-rgb, 63, 118, 189), 0.25);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.raid-owner-dropdown__overflow {
+  padding: 6px 10px;
+  font-size: 0.8em;
+  color: var(--text-faint);
+  border-top: 1px solid var(--background-modifier-border);
+  margin-top: 2px;
+}
+
+/* ===========================
+   Tag chip input
+   =========================== */
+
+.raid-tag-select {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  min-height: 38px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  cursor: text;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+
+.raid-tag-select:focus-within {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px rgba(var(--interactive-accent-rgb, 63, 118, 189), 0.12);
+}
+
+.raid-tag-select__chips {
+  display: contents;
+}
+
+.raid-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: 500;
+  background: rgba(var(--interactive-accent-rgb, 63, 118, 189), 0.1);
+  color: var(--interactive-accent);
+  white-space: nowrap;
+}
+
+.raid-tag-chip__text {
+  line-height: 1;
+}
+
+.raid-tag-chip__del {
+  background: transparent;
+  border: none;
+  color: currentColor;
+  cursor: pointer;
+  padding: 0 1px;
+  font-size: 1.1em;
+  line-height: 1;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+}
+
+.raid-tag-chip__del:hover {
+  opacity: 1;
+}
+
+.raid-tag-select__input {
+  flex: 1;
+  min-width: 80px;
+  border: none;
+  background: transparent;
+  color: var(--text-normal);
+  font-size: 0.92em;
+  font-family: var(--font-interface);
+  outline: none;
+  padding: 0;
+}
+
+/* ===========================
+   Settings — owner list
+   =========================== */
+
+.raid-settings-owner-list {
+  margin: 0 0 12px 0;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.raid-settings-owner-empty {
+  padding: 12px 14px;
+  color: var(--text-faint);
+  font-size: 0.88em;
+  margin: 0;
+}
+
+.raid-settings-owner-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.raid-settings-owner-row:last-child {
+  border-bottom: none;
+}
+
+.raid-settings-owner-name {
+  font-size: 0.9em;
+  color: var(--text-normal);
+  flex: 1;
+}
+
+.raid-settings-owner-remove {
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.raid-settings-owner-remove:hover {
+  background: rgba(163, 45, 45, 0.12);
+  color: var(--color-red);
+}
+
+.raid-settings-owner-add-row {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--background-secondary);
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.raid-settings-owner-input {
+  flex: 1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 0.88em;
+  outline: none;
+}
+
+.raid-settings-owner-input:focus {
+  border-color: var(--interactive-accent);
+}
+
+.raid-settings-owner-btn {
+  padding: 4px 12px;
+  font-size: 0.88em;
+  flex-shrink: 0;
+}
+
+/* ===========================
+   Add button
+   =========================== */
+
+.raid-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  border: 1px dashed var(--interactive-accent);
+  background: transparent;
+  color: var(--interactive-accent);
+  cursor: pointer;
+  font-size: 0.88em;
+  margin-top: 6px;
+  transition: background 0.12s;
+}
+
+.raid-add-btn:hover {
+  background: rgba(var(--interactive-accent-rgb, 63, 118, 189), 0.08);
+}
+
+/* ===========================
+   Responsive
+   =========================== */
+
+@media (max-width: 480px) {
+  .raid-summary-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .raid-matrix-grid {
+    min-height: 200px;
+  }
+}
