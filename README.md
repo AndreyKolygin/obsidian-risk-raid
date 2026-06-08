@@ -17,9 +17,21 @@ A card-based view of all your RAID items:
 - **Item cards** — compact view with expandable detail panel. Click a card to reveal contextual fields (mitigation, reasoning, impact, contact, etc.). Edit button (top-right) opens the full form. Quick-toggle checkbox marks an item done/open. History button (🕒) shows the full audit trail.
 - **Project tabs** — switch between projects; double-click a tab to open the project file
 
+![RAID Board — summary strip and card list](.github/assets/scr-raid-01.png)
+
+Clicking a card expands the detail panel with all contextual fields for that type and status:
+
+![Expanded card showing Mitigation, Probability and Impact notes](.github/assets/scr-raid-02.png)
+
+Type filtering is instant — click the **A** card to see only Assumptions, with their full detail:
+
+![Assumptions filter active with expanded card detail](.github/assets/scr-raid-04.png)
+
 ### Risk Matrix
 
-An interactive 3×3 probability × impact grid. All risks are plotted automatically; bubbles are right-clickable for quick edit.
+An interactive 3×3 probability × impact grid. All risks are plotted automatically. Click a bubble to show the full risk card below the legend; right-click for the context menu. If a cell has more than 3 risks, a **+N** button expands all hidden bubbles inline.
+
+![Risk Matrix with selected bubble and card panel below legend](.github/assets/scr-raid-05.png)
 
 ### Create / Edit Form
 
@@ -28,6 +40,8 @@ Type-aware modal form with:
 - Live severity preview in the Risk Assessment divider row
 - Multi-chip tag input with autocomplete
 - Owner autocomplete sourced from the vault
+
+![New Risk form with Risk Assessment section](.github/assets/scr-raid-03.png)
 
 ### History / Audit Trail
 
