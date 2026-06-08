@@ -79,7 +79,7 @@ IDs are auto-generated (`R-001`, `A-001`, `I-001`, `D-001`). You can edit the YA
 ## Installation (development)
 
 ```bash
-git clone https://github.com/yourname/obsidian-risk-raid
+git clone https://github.com/AndreyKolygin/obsidian-risk-raid
 cd obsidian-risk-raid
 npm install
 npm run build

@@ -5,6 +5,6 @@
   "minAppVersion": "1.4.0",
   "description": "RAID log management with interactive risk matrix for project managers",
   "author": "Andrey Kolygin",
-  "authorUrl": "",
+  "authorUrl": "https://github.com/AndreyKolygin/obsidian-risk-raid",
   "isDesktopOnly": false
 }
